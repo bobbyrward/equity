@@ -15,7 +15,7 @@ SETUP = {
     'url': 'http://github.com/bobbyrward/equity',
     'entry_points': {
         'console_scripts': {
-            'equity = equity.commands:main',
+            'equity = equity.commands.entry_point:main',
         }
     },
 }
