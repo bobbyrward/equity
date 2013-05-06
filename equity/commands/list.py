@@ -1,6 +1,9 @@
 from equity.commands.common import command_registry
 from equity.stash import Stash
 
+#TODO: Add a flag to list archived patches
+#TODO: Maybe see if we can emulated git and invoke a pager if it fills the screen?
+
 
 @command_registry.register(
     name='list',
