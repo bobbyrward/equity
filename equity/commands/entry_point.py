@@ -11,6 +11,7 @@ import equity.commands.help
 import equity.commands.list
 import equity.commands.pop
 import equity.commands.save
+import equity.commands.show
 
 
 def execute_command(command, args, options, parser):
