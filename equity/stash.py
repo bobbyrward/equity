@@ -178,3 +178,14 @@ class Stash(object):
 
         return patches[0]
 
+    def archive_patch(self, patch_id):
+        cursor = self.db.cursor()
+        try:
+            cursor.execute('''
+                UPDATE stash
+                SET deleted = 1
+                WHERE id = ?
+            ''', (patch_id,))
+        finally:
+            cursor.close()
+
