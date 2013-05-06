@@ -144,3 +144,37 @@ class Stash(object):
             return cursor.fetchall()
         finally:
             cursor.close()
+
+    def find_patches(self, filter_arg):
+        cursor = self.db.cursor()
+        try:
+            cursor.execute('''
+                SELECT * FROM stash
+                    WHERE deleted=0
+                    AND   (
+                        id = ?
+                        OR
+                        description LIKE ?
+                    )
+                ORDER BY date_created DESC
+            ''', (filter_arg, ''.join(['%', filter_arg, '%'])))
+
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def find_specific_patch(self, filter_arg):
+        patches = self.find_patches(filter_arg)
+
+        if len(patches) > 1:
+            raise Exception('More than one patch found matching "{}"'.format(
+                args[0]
+            ))
+
+        if len(patches) == 0:
+            raise Exception('No patches found matching "{}"'.format(
+                args[0]
+            ))
+
+        return patches[0]
+
