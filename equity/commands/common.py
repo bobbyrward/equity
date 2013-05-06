@@ -5,12 +5,13 @@ class CommandRegistry(object):
     def __init__(self):
         self.registry = {}
 
-    def register(self, name, description, help_message):
+    def register(self, name, description, help_message, usage):
         def decorator_wrapper(func):
             self.registry[name] = {
                 'entry_point': func,
                 'description': description,
                 'help_message': help_message,
+                'usage': usage,
             }
 
             @wraps(func)

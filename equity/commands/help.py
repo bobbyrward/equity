@@ -12,6 +12,12 @@ commands:
 {commands_text}
 """
 
+COMMAND_HELP = """usage: {exec_name} {command_usage}
+
+{command_description}
+{command_help_text}
+"""
+
 
 def global_help():
     commands_text = []
@@ -32,13 +38,23 @@ def global_help():
 
 
 def command_help(command):
-    pass
+    try:
+        info = command_registry.registry[command]
+    except KeyError:
+        raise Exception('Unknown command: {}'.format(command))
 
+    print COMMAND_HELP.format(
+            exec_name=os.path.basename(sys.argv[0]),
+            command_usage=info['usage'],
+            command_description=info['description'],
+            command_help_text=info['help_message'],
+        )
 
 @command_registry.register(
     name='help',
     description='Show a list of available commands',
     help_message=None,
+    usage='help [COMMAND]'
 )
 def entry_point(args, options, parser):
     if not args or args[0] == 'help':
