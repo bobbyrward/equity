@@ -111,7 +111,7 @@ class Stash(object):
     def add_patch(self, patch_text, summary, description):
         cursor = self.db.cursor()
 
-        compressed_patch = zlib.compress(patch_text).encode('base64')
+        compressed_patch = zlib.compress(patch_text)
         patch_id = sha1(compressed_patch).hexdigest()
 
         try:
@@ -122,7 +122,14 @@ class Stash(object):
                 VALUES 
                 (?, ?, ?, ?, ?, ?)
                 ''',
-                (patch_id, datetime.now(), False, summary, description, compressed_patch)
+                (
+                        patch_id,
+                        datetime.now(),
+                        False,
+                        summary,
+                        description,
+                        buffer(compressed_patch),
+                )
             )
         finally:
             cursor.close()
