@@ -54,6 +54,15 @@ class SvnController(object):
 
         return dict([y.split(':', 1) for y in output.split('\n') if y.strip()])
 
+    def diff(self, where=None):
+        args = None
+
+        if where is not None:
+            args = [where]
+
+        rc, output, error_output = self.run('diff', args)
+
+        return output
 
     def status(self, where=None):
         args = None
