@@ -1,5 +1,12 @@
 .. EQUITY
 
+*********
+ABANDONED
+*********
+
+I was finally able to break my last tie with svn, so I'm happily abandoning this.
+
+
 equity
 ================================================================================
 
